@@ -1,0 +1,32 @@
+{% extends "track/base.html" %}
+
+{% block content %}
+
+    <h1>ORDERS = {{ count }} в работе!!!</h1>
+
+    <table class="table table-secondary">
+        <thead>
+            <tr>
+                <th scope="col">Номер заказа</th>
+                <th scope="col">Тип</th>
+                <th scope="col">Дата сдачи заказа</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+                <tr>
+                    {% if order.completeness == False and order.date_time|date:"Y-m-d" <= now|date:"Y-m-d" %}
+                        <td class="table-danger">{{ order.number }}</td>
+                        <td class="table-danger">{{ order.type_order }}</td>
+                        <td class="table-danger">{{ order.date_time|date:'d.m.Y ---> H:i' }}</td>
+
+                    {% elif order.completeness == False %}
+                        <td class="table-warning">{{ order.number }}</td>
+                        <td class="table-warning">{{ order.type_order }}</td>
+                        <td class="table-warning">{{ order.date_time|date:'d.m.Y ---> H:i' }}</td>
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+
+{% endblock content %}
